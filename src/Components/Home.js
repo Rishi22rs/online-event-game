@@ -3,10 +3,10 @@ import {Link} from 'react-router-dom'
 
 const Home=()=>{
     return(
-        <div>
+        <div className="App">
             <h1>Guess the brand</h1>
             <Link to='/Question'>
-                <button>Start</button>
+                <button className="btn">Start</button>
             </Link>
         </div>
     )

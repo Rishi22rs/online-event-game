@@ -15,6 +15,14 @@ const QuestionSlider=()=>{
 	const [scoreBtn,setScoreBtn]=useState(false)
 	const [startBtn,setStartBtn]=useState(true)
 	const [showPrompt,setShowPrompt]=useState(true)
+	const [timerLength,setTimerLength]=useState(window.innerWidth)
+	let timerBarStyle={
+		display: 'block',
+		height: '50px',
+		background: '#E75998',
+		borderRadius: '20px',
+		width: timerLength
+	}
 
 	var timerId
 	const songList=[
@@ -39,6 +47,7 @@ const QuestionSlider=()=>{
 	]
 
 	const NextAudio=()=>{
+		setTimerLength(window.innerWidth)
 		setStartBtn(true)
 		setInput('')	
 		setCorrect('')
@@ -55,6 +64,7 @@ const QuestionSlider=()=>{
 	 }
 
 	const StartGame=()=>{
+		setLast(true)
 		setStartBtn(false)
 		timerId=setInterval(StartTimer,1000)
 		setIntrvl(timerId)
@@ -62,6 +72,7 @@ const QuestionSlider=()=>{
 	}
 	const StartTimer=()=>{
 		setDisplayTimer(prevTime=>prevTime-1)
+		setTimerLength(time=>time-window.innerWidth/15)
 		setPlay(true)
 	}
 
@@ -71,17 +82,14 @@ const QuestionSlider=()=>{
 	}
 
 	const CheckCorrectAns=()=>{
+		setLast(false)
 		console.log(input.toLowerCase(),songAns[songIndex].toLowerCase())
 		if(!input.toLowerCase().localeCompare(songAns[songIndex].toLowerCase())){
-			setScore(prevScore=>prevScore+1)
+			setScore(score+1)
 			setCorrect('Correct')
 		}else{
 			setCorrect('Incorrect')
 		}
-	}
-
-	const ShowSongImage=()=>{
-
 	}
 
 	useEffect(()=>{
@@ -94,7 +102,7 @@ const QuestionSlider=()=>{
 				setScoreBtn(true)
 			}
 		}
-	},[displayTimer,songIndex,last])
+	},[displayTimer])
 
 	return(
 		<div>
@@ -106,17 +114,20 @@ const QuestionSlider=()=>{
 				src={songList[songIndex]}
 				playing={play}
 			/>
-			<h1>Audio no. {songIndex+1}</h1>
-			<h3>Your Score: {score}</h3>
-			<h1>{displayTimer}</h1>
-			<input type='text' placeholder='your answer' onChange={e=>setInput(e.target.value)} value={input}/><br />
-			{startBtn?<button onClick={StartGame}>Start audio</button>:<></>}
+			<div className="timerBarContainer">
+				<span style={timerBarStyle}></span>
+			</div>
+			<h1 className="text">Audio no. {songIndex+1}</h1>
+			<h3 className="text">Your Score: {score}</h3>
+			<h1 className="text">{displayTimer}</h1>
+			<input className="input" type='text' placeholder='your answer' onChange={e=>setInput(e.target.value)} value={input}/><br />
+			{startBtn?<button className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={StartGame}>Start audio</button>:<></>}
 			{!last?
-			<button onClick={NextAudio}>Next</button>:
+			<button className="btn" style={{fontSize:'20px',padding:'20px',float:'right',marginTop:'40px'}} onClick={NextAudio}>Next</button>:
 			<></>}
-			<h1>{correct}</h1>
+			<h1 className="text">{correct}</h1>
 			{scoreBtn?
-			<button><Link to={`/ShowScore/${score}`}>Go to score page</Link></button>:
+			<button className="btn"><Link to={`/ShowScore/${score}`}>Go to score page</Link></button>:
 			<></>
 			}
 		</div>

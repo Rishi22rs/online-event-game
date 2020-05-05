@@ -3,6 +3,7 @@ import {BrowserRouter as Router,Link,Switch,Route} from 'react-router-dom'
 import Home from './Components/Home'
 import QuestionSlider from './Components/QuestionSlider'
 import ShowScore from './Components/ShowScore'
+import "./App.css"
 
 function App() {
   return (
