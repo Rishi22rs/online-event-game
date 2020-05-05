@@ -117,7 +117,7 @@ const QuestionSlider=()=>{
 			<div className="timerBarContainer">
 				<span style={timerBarStyle}></span>
 			</div>
-			<h1 className="text">Audio no. {songIndex+1}</h1>
+			<h1 className="text">Audio {songIndex+1}/{songList.length}</h1>
 			<h3 className="text">Your Score: {score}</h3>
 			<h1 className="text">{displayTimer}</h1>
 			<input className="input" type='text' placeholder='your answer' onChange={e=>setInput(e.target.value)} value={input}/><br />
