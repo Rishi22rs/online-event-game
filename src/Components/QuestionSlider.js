@@ -11,7 +11,7 @@ const QuestionSlider=()=>{
 	const [input,setInput]=useState('')
 	const [score,setScore]=useState(0)
 	const [correct,setCorrect]=useState('')
-	const [last,setLast]=useState(false)
+	const [last,setLast]=useState(true)
 	const [scoreBtn,setScoreBtn]=useState(false)
 	const [startBtn,setStartBtn]=useState(true)
 	const [showPrompt,setShowPrompt]=useState(true)
@@ -54,7 +54,7 @@ const QuestionSlider=()=>{
 		setPlay(false)
 		clearInterval(interval)
 		setDisplayTimer(15)
-		if(songIndex==songList.length-2)setLast(true)
+		setLast(true)
 		setSongIndex(songIndex=>songIndex+1)
 	}
 
@@ -82,8 +82,8 @@ const QuestionSlider=()=>{
 	}
 
 	const CheckCorrectAns=()=>{
-		setLast(false)
-		console.log(input.toLowerCase(),songAns[songIndex].toLowerCase())
+		if(songIndex===songList.length-1)setLast(false)
+		else setLast(false)
 		if(!input.toLowerCase().localeCompare(songAns[songIndex].toLowerCase())){
 			setScore(score+1)
 			setCorrect('Correct')
@@ -120,8 +120,10 @@ const QuestionSlider=()=>{
 			<h1 className="text">Audio {songIndex+1}/{songList.length}</h1>
 			<h3 className="text">Your Score: {score}</h3>
 			<h1 className="text">{displayTimer}</h1>
-			<input className="input" type='text' placeholder='your answer' onChange={e=>setInput(e.target.value)} value={input}/><br />
-			{startBtn?<button className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={StartGame}>Start audio</button>:<></>}
+			<p style={{float:"right",margin:'10px',color:'white'}}>{input.length}/{songAns[songIndex].length}</p>
+			<input disabled={displayTimer===0?true:false} className="input" type='text' placeholder='your answer' onChange={e=>setInput(e.target.value)} value={input}/><br />
+			{startBtn&&last?<button className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={StartGame}>Start audio</button>:
+			<button className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={CheckCorrectAns}>Submit</button>}
 			{!last?
 			<button className="btn" style={{fontSize:'20px',padding:'20px',float:'right',marginTop:'40px'}} onClick={NextAudio}>Next</button>:
 			<></>}
