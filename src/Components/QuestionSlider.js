@@ -196,7 +196,7 @@ const QuestionSlider=({match})=>{
 			<h1 className="text">Audio {songIndex+1}/{listOfSongs.length}</h1>
 			<h3 className="text">Your Score: {score}</h3>
 			<h1 className="text">{displayTimer}</h1>
-			{showCorrect?<p style={{float:"left",margin:'10px',color:"white",marginTop:'4%'}}>{listOfSongs[songIndex].songAns}</p>:<></>}
+			{showCorrect?<p style={{float:"left",margin:'10px',color:"white",marginTop:'4%'}}>{listOfSongs[songIndex].songAns}<span style={{color:"#949EC4"}}> it is</span></p>:<></>}
 			<p style={{float:"right",margin:'10px',color:"white",marginTop:'4%'}}>{input.length}/{listOfSongs[songIndex].songAns.length}</p>
 			<input disabled={displayTimer===0?true:false} className="inputi" type='text' placeholder='your answer' onChange={e=>setInput(e.target.value)} value={input}/><br />
 			{startBtn&&last?<button className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={StartGame}>Start audio</button>:
@@ -204,7 +204,7 @@ const QuestionSlider=({match})=>{
 			{!last?
 			<button className="btn" style={{fontSize:'20px',padding:'20px',float:'right',marginTop:'40px'}} onClick={NextAudio}>Next</button>:
 			<></>}
-			<h1 className="text">{correct}</h1>
+			<h2 className="text">{correct}</h2>
 			{scoreBtn?
 			<button className="btn" style={{fontSize:'20px',padding:'20px',marginLeft:'25%'}}><Link style={{textDecoration:'none',color:'white'}} to={`/ShowScore`}>Go to score page</Link></button>:
 			<></>
