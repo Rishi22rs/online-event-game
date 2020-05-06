@@ -52,25 +52,25 @@ const Home=()=>{
             {error===1?<p style={{textAlign:'center',color:'red'}}>*Fill all the fields</p>:<></>}
             {error===2?<p style={{textAlign:'center',color:'red'}}>*User already given the quiz</p>:<></>}
             <div style={{padding:7}}>
-            <input className="input" type="text" placeholder="Name" onChange={(e)=>setDetail({
+            <input className="inputi" type="text" placeholder="Name" onChange={(e)=>setDetail({
                 name:e.target.value,
                 email:detail.email,
                 mobile:detail.mobile,
                 college:detail.college
             })}/>
-            <input className="input" style={{marginTop:10}} type="email" placeholder="Email" onChange={(e)=>setDetail({
+            <input className="inputi" style={{marginTop:10}} type="email" placeholder="Email" onChange={(e)=>setDetail({
                 name:detail.name,
                 email:e.target.value,
                 mobile:detail.mobile,
                 college:detail.college
             })}/>
-            <input className="input" style={{marginTop:10}} type="number" placeholder="Mobile number" onChange={(e)=>setDetail({
+            <input className="inputi" style={{marginTop:10}} type="number" placeholder="Mobile number" onChange={(e)=>setDetail({
                 name:detail.name,
                 email:detail.email,
                 mobile:e.target.value,
                 college:detail.college
             })}/>
-            <input className="input" style={{marginTop:10}} type="text" placeholder="College" onChange={(e)=>setDetail({
+            <input className="inputi" style={{marginTop:10}} type="text" placeholder="College" onChange={(e)=>setDetail({
                 name:detail.name,
                 email:detail.email,
                 mobile:detail.mobile,

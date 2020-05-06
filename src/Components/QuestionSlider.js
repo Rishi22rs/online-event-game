@@ -6,7 +6,7 @@ const QuestionSlider=({match})=>{
 
 	const [play,setPlay]=useState(false)
 	const [songIndex,setSongIndex]=useState(0)
-	const [displayTimer,setDisplayTimer]=useState(15)
+	const [displayTimer,setDisplayTimer]=useState(20)
 	const [interval,setIntrvl]=useState()
 	const [input,setInput]=useState('')
 	const [score,setScore]=useState(0)
@@ -18,6 +18,7 @@ const QuestionSlider=({match})=>{
 	const [timerLength,setTimerLength]=useState(window.innerWidth)
 	const [listOfSongs,setListOfSongs]=useState([])
 	const [disableSubmit,setDisableSubmit]=useState(false)
+	const [showCorrect,setShowCorrect]=useState(false)
 	let timerBarStyle={
 		display: 'block',
 		height: '50px',
@@ -105,6 +106,7 @@ const QuestionSlider=({match})=>{
 		return result;
 	}
 	const NextAudio=()=>{
+		setShowCorrect(false)
 		setDisableSubmit(false)
 		setTimerLength(window.innerWidth)
 		setStartBtn(true)
@@ -112,7 +114,7 @@ const QuestionSlider=({match})=>{
 		setCorrect('')
 		setPlay(false)
 		clearInterval(interval)
-		setDisplayTimer(15)
+		setDisplayTimer(20)
 		setLast(true)
 		setSongIndex(songIndex=>songIndex+1)
 	}
@@ -153,6 +155,7 @@ const QuestionSlider=({match})=>{
 		}else{
 			setCorrect('Incorrect')
 		}
+		setShowCorrect(true)
 		localStorage.setItem('score',score)
 		if(songIndex===listOfSongs.length-1){
 			setScoreBtn(true)
@@ -193,8 +196,9 @@ const QuestionSlider=({match})=>{
 			<h1 className="text">Audio {songIndex+1}/{listOfSongs.length}</h1>
 			<h3 className="text">Your Score: {score}</h3>
 			<h1 className="text">{displayTimer}</h1>
+			{showCorrect?<p style={{float:"left",margin:'10px',color:"white",marginTop:'4%'}}>{listOfSongs[songIndex].songAns}</p>:<></>}
 			<p style={{float:"right",margin:'10px',color:"white",marginTop:'4%'}}>{input.length}/{listOfSongs[songIndex].songAns.length}</p>
-			<input disabled={displayTimer===0?true:false} className="input" type='text' placeholder='your answer' onChange={e=>setInput(e.target.value)} value={input}/><br />
+			<input disabled={displayTimer===0?true:false} className="inputi" type='text' placeholder='your answer' onChange={e=>setInput(e.target.value)} value={input}/><br />
 			{startBtn&&last?<button className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={StartGame}>Start audio</button>:
 			<button disabled={disableSubmit} className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={CheckCorrectAns}>Submit</button>}
 			{!last?

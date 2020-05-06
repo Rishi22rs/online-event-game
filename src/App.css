@@ -1,13 +1,11 @@
 *{
   font-family: 'Merriweather', serif;
-font-family: 'Modak', cursive;
+  font-family: 'Modak', cursive;
 }
 .App {
   text-align: center;
   color:#949EC4;
   font-size: 20px; 
-  -webkit-text-stroke-width: 1px; 
-  -webkit-text-stroke-color: black; 
 }
 .btn{
   background: #117EEB;
@@ -29,7 +27,7 @@ font-family: 'Modak', cursive;
   height: 50px;
   padding: 3px;
 }
-.input{
+.inputi{
   width: 100%;
   display: block;
   height: 50px;
