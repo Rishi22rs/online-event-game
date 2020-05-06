@@ -16,6 +16,7 @@ const QuestionSlider=()=>{
 	const [startBtn,setStartBtn]=useState(true)
 	const [showPrompt,setShowPrompt]=useState(true)
 	const [timerLength,setTimerLength]=useState(window.innerWidth)
+	const [listOfSongs,setListOfSongs]=useState([])
 	let timerBarStyle={
 		display: 'block',
 		height: '50px',
@@ -25,27 +26,84 @@ const QuestionSlider=()=>{
 	}
 
 	var timerId
-	const songList=[
-		"https://appointmentt.000webhostapp.com/approved/cse1/20th%20century%20fox.mp4",
-		"https://appointmentt.000webhostapp.com/approved/cse1/got.mp4",
-		"https://appointmentt.000webhostapp.com/approved/cse1/intel.mp4",
-		"https://appointmentt.000webhostapp.com/approved/cse1/mario.mp4",
-		"https://appointmentt.000webhostapp.com/approved/cse1/netfix.mp4",
-		"https://appointmentt.000webhostapp.com/approved/cse1/Nokia.mp4",
-		"https://appointmentt.000webhostapp.com/approved/cse1/tom%20and%20jerry.mp4",
-		"https://appointmentt.000webhostapp.com/approved/cse1/windows%20xp.mp4"
-	]
-	const songAns=[
-		"20th century studio",
-		"Game of thrones",
-		"intel",
-		"mario",
-		"netflix",
-		"Nokia",
-		"tom and jerry",
-		"windows xp"
-	]
-
+	const songList=[{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/20th%20century%20fox.mp4",
+			songAns:"20th century studio"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/got.mp4",
+			songAns:"Game of thrones"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/intel.mp4",
+			songAns:"Intel"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/mario.mp4",
+			songAns:"mario"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/netfix.mp4",
+			songAns:"netflix"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/Nokia.mp4",
+			songAns:"nokia"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/tom%20and%20jerry.mp4",
+			songAns:"tom and jerry"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/windows%20xp.mp4",
+			songAns:"windows xp"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/Universal%20Studios.mp4",
+			songAns:"universal studios"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/Stranger%20things.mp4",
+			songAns:"stranger things"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/Disney.mp4",
+			songAns:"disney"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/blackberry.mp4",
+			songAns:"blackberry"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/sony%20ericsson.mp4",
+			songAns:"sony ericsson"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/airtel.mp4",
+			songAns:"airtel"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/mcdonald.mp4",
+			songAns:"mcdonalds"
+		},
+		{
+			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/idea.mp4",
+			songAns:"idea"
+		}]
+		
+	const getRandom=(arr, n)=> {
+		var result = new Array(n),
+			len = arr.length,
+			taken = new Array(len);
+		if (n > len)
+			throw new RangeError("getRandom: more elements taken than available");
+		while (n--) {
+			var x = Math.floor(Math.random() * len);
+			result[n] = arr[x in taken ? taken[x] : x];
+			taken[x] = --len in taken ? taken[len] : len;
+		}
+		return result;
+	}
 	const NextAudio=()=>{
 		setTimerLength(window.innerWidth)
 		setStartBtn(true)
@@ -82,28 +140,34 @@ const QuestionSlider=()=>{
 	}
 
 	const CheckCorrectAns=()=>{
-		if(songIndex===songList.length-1)setLast(false)
+		if(songIndex===listOfSongs.length-1)setLast(true)
 		else setLast(false)
-		if(!input.toLowerCase().localeCompare(songAns[songIndex].toLowerCase())){
+		if(!input.toLowerCase().localeCompare(listOfSongs[songIndex].songAns.toLowerCase())){
 			setScore(score+1)
 			setCorrect('Correct')
 		}else{
 			setCorrect('Incorrect')
 		}
 	}
-
+	useEffect(()=>{
+		const listSongs=getRandom(songList,10)
+		setListOfSongs(listSongs)
+		console.log(listOfSongs)
+	},[])
 	useEffect(()=>{
 		window.addEventListener("beforeunload",onUnload)
 		if(displayTimer==0){
 			StopGame()
 			CheckCorrectAns()
-			if(songIndex==songList.length-1){
+			if(songIndex==listOfSongs.length-1){
 				setShowPrompt(false)
 				setScoreBtn(true)
 			}
 		}
 	},[displayTimer])
-
+	if(listOfSongs.length===0)
+		return(<div>loading</div>)
+	else{
 	return(
 		<div>
 			<Prompt
@@ -111,16 +175,16 @@ const QuestionSlider=()=>{
 				message='You have not completed the game, you have to start again.'
 		/>
 			<ReactHowler
-				src={songList[songIndex]}
+				src={listOfSongs[songIndex].songURL}
 				playing={play}
 			/>
 			<div className="timerBarContainer">
 				<span style={timerBarStyle}></span>
 			</div>
-			<h1 className="text">Audio {songIndex+1}/{songList.length}</h1>
+			<h1 className="text">Audio {songIndex+1}/{listOfSongs.length}</h1>
 			<h3 className="text">Your Score: {score}</h3>
 			<h1 className="text">{displayTimer}</h1>
-			<p style={{float:"right",margin:'10px',color:'white'}}>{input.length}/{songAns[songIndex].length}</p>
+			<p style={{float:"right",margin:'10px',color:"white",marginTop:'4%'}}>{input.length}/{listOfSongs[songIndex].songAns.length}</p>
 			<input disabled={displayTimer===0?true:false} className="input" type='text' placeholder='your answer' onChange={e=>setInput(e.target.value)} value={input}/><br />
 			{startBtn&&last?<button className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={StartGame}>Start audio</button>:
 			<button className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={CheckCorrectAns}>Submit</button>}
@@ -129,11 +193,11 @@ const QuestionSlider=()=>{
 			<></>}
 			<h1 className="text">{correct}</h1>
 			{scoreBtn?
-			<button className="btn"><Link to={`/ShowScore/${score}`}>Go to score page</Link></button>:
+			<button className="btn" style={{fontSize:'20px',padding:'20px',marginLeft:'25%'}}><Link style={{textDecoration:'none',color:'white'}} to={`/ShowScore/${score}`}>Go to score page</Link></button>:
 			<></>
 			}
 		</div>
-	)
+	)}
 }
 
 export default QuestionSlider
