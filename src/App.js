@@ -15,7 +15,7 @@ function App() {
         <Route path='/Question' component={QuestionSlider}/>
       </Switch>
       <Switch>
-        <Route path='/ShowScore/:score' component={ShowScore}/>
+        <Route path='/ShowScore/' component={ShowScore}/>
       </Switch>
     </Router>
   );

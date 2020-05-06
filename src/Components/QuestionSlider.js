@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react'
 import ReactHowler from 'react-howler'
 import {Prompt,Redirect, Link} from 'react-router-dom'
 
-const QuestionSlider=()=>{
+const QuestionSlider=({match})=>{
 
 	const [play,setPlay]=useState(false)
 	const [songIndex,setSongIndex]=useState(0)
@@ -17,6 +17,7 @@ const QuestionSlider=()=>{
 	const [showPrompt,setShowPrompt]=useState(true)
 	const [timerLength,setTimerLength]=useState(window.innerWidth)
 	const [listOfSongs,setListOfSongs]=useState([])
+	const [disableSubmit,setDisableSubmit]=useState(false)
 	let timerBarStyle={
 		display: 'block',
 		height: '50px',
@@ -24,7 +25,6 @@ const QuestionSlider=()=>{
 		borderRadius: '20px',
 		width: timerLength
 	}
-
 	var timerId
 	const songList=[{
 			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/20th%20century%20fox.mp4",
@@ -105,6 +105,7 @@ const QuestionSlider=()=>{
 		return result;
 	}
 	const NextAudio=()=>{
+		setDisableSubmit(false)
 		setTimerLength(window.innerWidth)
 		setStartBtn(true)
 		setInput('')	
@@ -140,7 +141,11 @@ const QuestionSlider=()=>{
 	}
 
 	const CheckCorrectAns=()=>{
-		if(songIndex===listOfSongs.length-1)setLast(true)
+		setDisableSubmit(true)
+		if(songIndex===listOfSongs.length-1){
+			setStartBtn(false)
+			setLast(true)
+		}
 		else setLast(false)
 		if(!input.toLowerCase().localeCompare(listOfSongs[songIndex].songAns.toLowerCase())){
 			setScore(score+1)
@@ -148,11 +153,15 @@ const QuestionSlider=()=>{
 		}else{
 			setCorrect('Incorrect')
 		}
+		localStorage.setItem('score',score)
+		if(songIndex===listOfSongs.length-1){
+			setScoreBtn(true)
+			setShowPrompt(false)
+		}
 	}
 	useEffect(()=>{
 		const listSongs=getRandom(songList,10)
 		setListOfSongs(listSongs)
-		console.log(listOfSongs)
 	},[])
 	useEffect(()=>{
 		window.addEventListener("beforeunload",onUnload)
@@ -187,13 +196,13 @@ const QuestionSlider=()=>{
 			<p style={{float:"right",margin:'10px',color:"white",marginTop:'4%'}}>{input.length}/{listOfSongs[songIndex].songAns.length}</p>
 			<input disabled={displayTimer===0?true:false} className="input" type='text' placeholder='your answer' onChange={e=>setInput(e.target.value)} value={input}/><br />
 			{startBtn&&last?<button className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={StartGame}>Start audio</button>:
-			<button className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={CheckCorrectAns}>Submit</button>}
+			<button disabled={disableSubmit} className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={CheckCorrectAns}>Submit</button>}
 			{!last?
 			<button className="btn" style={{fontSize:'20px',padding:'20px',float:'right',marginTop:'40px'}} onClick={NextAudio}>Next</button>:
 			<></>}
 			<h1 className="text">{correct}</h1>
 			{scoreBtn?
-			<button className="btn" style={{fontSize:'20px',padding:'20px',marginLeft:'25%'}}><Link style={{textDecoration:'none',color:'white'}} to={`/ShowScore/${score}`}>Go to score page</Link></button>:
+			<button className="btn" style={{fontSize:'20px',padding:'20px',marginLeft:'25%'}}><Link style={{textDecoration:'none',color:'white'}} to={`/ShowScore`}>Go to score page</Link></button>:
 			<></>
 			}
 		</div>

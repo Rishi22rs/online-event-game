@@ -9,29 +9,49 @@ const Home=()=>{
         mobile:'',
         college:'' 
     })
+    const [error,setError]=useState(0)
 
     const[go,setGo]=useState(false)
 
+    const CheckUser=()=>{
+        if(detail.name!==''&&detail.email!==''&&detail.mobile!==''&&detail.college!==''){
+            let formData=new FormData()
+            formData.append('email',detail.email)
+            axios.post('https://appointmentt.000webhostapp.com/online%20event/CheckingEmail.php',formData)
+            .then(res=>{
+                if(res.data.user!=='exist')SendData()
+                else setError(2)
+            })
+        }else{
+            setError(1)
+        }
+    }
+
     const SendData=()=>{
-        let formData=new FormData()
-        formData.append('name',detail.name)
-        formData.append('email',detail.email)
-        formData.append('mobile',detail.mobile)
-        formData.append('college',detail.college)
-        axios.post('http://192.168.43.185/onlineevent/SendData.php',formData)
-        .then(res=>{
-            if(res.data.x=="0")setGo(true)
-        })
+        if(detail.name!==''&&detail.email!==''&&detail.mobile!==''&&detail.college!==''){
+            let formData=new FormData()
+            formData.append('name',detail.name)
+            formData.append('email',detail.email)
+            formData.append('mobile',detail.mobile)
+            formData.append('college',detail.college)
+            axios.post('https://appointmentt.000webhostapp.com/online%20event/SendData.php',formData)
+            .then(res=>{
+                if(res.data.uid==detail.email)setGo(true)
+            })
+        }else 
+            setError(1)
     }
     if(go){
-        localStorage.setItem("a",true)
+        localStorage.setItem("email",detail.email)
         return <Redirect to={`/Question`} />
     }
     return(
         <div className="App">
             <h1>Guess the brand</h1>
-            <button className="btn" onClick={SendData}>Start</button><br />
-            <div style={{padding:50}}>
+            <button className="btn" onClick={CheckUser}>Start</button><br />
+            {error===1?<p style={{textAlign:'center',color:'red'}}>*Fill all the fields</p>:<></>}
+            {error===2?<p style={{textAlign:'center',color:'red'}}>*User already given the quiz</p>:<></>}
+            <div style={{padding:7}}>
             <input className="input" type="text" placeholder="Name" onChange={(e)=>setDetail({
                 name:e.target.value,
                 email:detail.email,
