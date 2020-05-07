@@ -19,6 +19,7 @@ const QuestionSlider=({match})=>{
 	const [listOfSongs,setListOfSongs]=useState([])
 	const [disableSubmit,setDisableSubmit]=useState(false)
 	const [showCorrect,setShowCorrect]=useState(false)
+	const [disableInput,setDisableInput]=useState(false)
 	let timerBarStyle={
 		display: 'block',
 		height: '50px',
@@ -138,11 +139,13 @@ const QuestionSlider=({match})=>{
 	}
 
 	const StopGame=()=>{
+		setDisableInput(true)
 		clearInterval(interval)
 		setPlay(false)
 	}
 
 	const CheckCorrectAns=()=>{
+		setDisableInput(true)
 		setDisableSubmit(true)
 		if(songIndex===listOfSongs.length-1){
 			setStartBtn(false)
@@ -170,7 +173,8 @@ const QuestionSlider=({match})=>{
 		window.addEventListener("beforeunload",onUnload)
 		if(displayTimer==0){
 			StopGame()
-			CheckCorrectAns()
+			if(!disableSubmit)
+				CheckCorrectAns()
 			if(songIndex==listOfSongs.length-1){
 				setShowPrompt(false)
 				setScoreBtn(true)
@@ -198,7 +202,7 @@ const QuestionSlider=({match})=>{
 			<h1 className="text">{displayTimer}</h1>
 			{showCorrect?<p style={{float:"left",margin:'10px',color:"white",marginTop:'4%'}}>{listOfSongs[songIndex].songAns}<span style={{color:"#949EC4"}}> it is</span></p>:<></>}
 			<p style={{float:"right",margin:'10px',color:"white",marginTop:'4%'}}>{input.length}/{listOfSongs[songIndex].songAns.length}</p>
-			<input disabled={displayTimer===0?true:false} className="inputi" type='text' placeholder='your answer' onChange={e=>setInput(e.target.value)} value={input}/><br />
+			<input disabled={disableInput} className="inputi" type='text' placeholder='your answer' onChange={e=>setInput(e.target.value)} value={input}/><br />
 			{startBtn&&last?<button className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={StartGame}>Start audio</button>:
 			<button disabled={disableSubmit} className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={CheckCorrectAns}>Submit</button>}
 			{!last?

@@ -39,3 +39,21 @@
   text-align: center;
   color: white;
 }
+/* .inputi{
+  outline: none;
+  
+  color:white;
+  width: 100%;
+  display: block;
+  text-align: center;
+  height: 50px;
+  background:none;
+  padding-left: 15px;
+  letter-spacing: 42px;
+  border: 0;
+  background-image: linear-gradient(to left, white 70%, rgba(255, 255, 255, 0) 0%);
+  background-position: bottom;
+  background-size: 50px 1px;
+  background-repeat: repeat-x;
+  width: 220px;
+} */
