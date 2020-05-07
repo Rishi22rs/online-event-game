@@ -1,9 +1,13 @@
-import React from 'react';
+import React from 'react'
+import ReactGA from 'react-ga'
 import {BrowserRouter as Router,Link,Switch,Route} from 'react-router-dom'
 import Home from './Components/Home'
 import QuestionSlider from './Components/QuestionSlider'
 import ShowScore from './Components/ShowScore'
 import "./App.css"
+
+const trackingId = "UA-165840903-1"
+ReactGA.initialize(trackingId)
 
 function App() {
   return (
@@ -15,7 +19,7 @@ function App() {
         <Route path='/Question' component={QuestionSlider}/>
       </Switch>
       <Switch>
-        <Route path='/ShowScore/' component={ShowScore}/>
+        <Route path='/ShowScore' component={ShowScore}/>
       </Switch>
     </Router>
   );
