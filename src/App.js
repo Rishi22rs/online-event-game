@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import ReactGA from 'react-ga'
 import {BrowserRouter as Router,Link,Switch,Route} from 'react-router-dom'
 import Home from './Components/Home'
@@ -7,9 +7,15 @@ import ShowScore from './Components/ShowScore'
 import "./App.css"
 
 const trackingId = "UA-165840903-1"
-ReactGA.initialize(trackingId)
 
 function App() {
+
+  useEffect(()=>{
+    ReactGA.initialize(trackingId)
+
+    ReactGA.pageview(window.location.pathname + window.location.search)
+  },[])
+
   return (
     <Router>
       <Switch>
