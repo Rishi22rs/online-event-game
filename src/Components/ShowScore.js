@@ -20,7 +20,6 @@ const ShowScore=()=>{
 			<h1 className="text" style={{borderBottom:'2px solid white',paddingBottom:20}}>Final score</h1>
 			<h2 className="text" style={{color:'white'}}>{score}/10</h2>
 			<p className="text" style={{fontSize:30}}>Well played</p>
-			<p className="text" style={{color:'white'}}>Go back to the main page <a style={{color:'#E75998'}} href="https://www.aaruushdomains.com">here</a></p>
 		</div>
 	)
 }
