@@ -108,6 +108,7 @@ const QuestionSlider=({match})=>{
 	}
 	const NextAudio=()=>{
 		setShowCorrect(false)
+		setDisableInput(false)
 		setDisableSubmit(false)
 		setTimerLength(window.innerWidth)
 		setStartBtn(true)
@@ -134,7 +135,7 @@ const QuestionSlider=({match})=>{
 	}
 	const StartTimer=()=>{
 		setDisplayTimer(prevTime=>prevTime-1)
-		setTimerLength(time=>time-window.innerWidth/15)
+		setTimerLength(time=>time-window.innerWidth/20)
 		setPlay(true)
 	}
 
