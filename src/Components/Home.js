@@ -66,7 +66,7 @@ const Home=()=>{
                 <p><span style={{color:'white'}}>4)</span>	The inputs entered aren’t case sensitive.</p>
                 <button className='btn' onClick={()=>setShowModal(false)} style={{fontSize:20,float:'right',padding:25}}>Okay</button>
 			</Modal>
-            <h1>Guess the brand</h1>
+            <h1>Audio Mage</h1>
             <button className="btn" onClick={CheckUser}>Start</button><br />
             {error===1?<p style={{textAlign:'center',color:'red'}}>*Fill all the fields</p>:<></>}
             {error===2?<p style={{textAlign:'center',color:'red'}}>*User already given the quiz</p>:<></>}
