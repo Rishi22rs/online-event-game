@@ -20,6 +20,7 @@ const QuestionSlider=({match})=>{
 	const [disableSubmit,setDisableSubmit]=useState(false)
 	const [showCorrect,setShowCorrect]=useState(false)
 	const [disableInput,setDisableInput]=useState(false)
+
 	let timerBarStyle={
 		display: 'block',
 		height: '50px',
@@ -171,6 +172,8 @@ const QuestionSlider=({match})=>{
 		setListOfSongs(listSongs)
 	},[])
 	useEffect(()=>{
+		if(input==='')setDisableSubmit(true)
+		else setDisableSubmit(false)
 		window.addEventListener("beforeunload",onUnload)
 		if(displayTimer==0){
 			StopGame()
@@ -186,6 +189,7 @@ const QuestionSlider=({match})=>{
 		return(<div>loading</div>)
 	else{
 	return(
+		<>
 		<div>
 			<Prompt
 				when={showPrompt}
@@ -202,7 +206,7 @@ const QuestionSlider=({match})=>{
 			<h3 className="text">Your Score: {score}</h3>
 			<h1 className="text">{displayTimer}</h1>
 			{showCorrect?<p style={{float:"left",margin:'10px',color:"white",marginTop:'4%'}}>{listOfSongs[songIndex].songAns}<span style={{color:"#949EC4"}}> it is</span></p>:<></>}
-			<p style={{float:"right",margin:'10px',color:"white",marginTop:'4%'}}>{input.length}/{listOfSongs[songIndex].songAns.length}</p>
+			<p style={{float:"right",margin:'10px',color:"white",marginTop:'4%'}}>Characters {input.length}/{listOfSongs[songIndex].songAns.length}</p>
 			<input disabled={disableInput} className="inputi" style={{fontWeight:"bold"}} type='text' placeholder='your answer' onChange={e=>setInput(e.target.value)} value={input}/><br />
 			{startBtn&&last?<button className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={StartGame}>Start audio</button>:
 			<button disabled={disableSubmit} className="btn" style={{fontSize:'20px',padding:'20px',float:'left',marginTop:'40px'}} onClick={CheckCorrectAns}>Submit</button>}
@@ -215,6 +219,14 @@ const QuestionSlider=({match})=>{
 			<></>
 			}
 		</div>
+		<div class='ripple-background' style={{zIndex:-100,position:'absolute'}}>
+            <div class='circle xxlarge shade1'></div>
+            <div class='circle xlarge shade2'></div>
+            <div class='circle large shade3'></div>
+            <div class='circle mediun shade4'></div>
+            <div class='circle small shade5'></div>
+        </div>
+		</>
 	)}
 }
 
