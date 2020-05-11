@@ -176,6 +176,7 @@ const QuestionSlider=({match})=>{
 		else setDisableSubmit(false)
 		window.addEventListener("beforeunload",onUnload)
 		if(displayTimer==0){
+			setLast(false)
 			StopGame()
 			if(!disableSubmit)
 				CheckCorrectAns()
