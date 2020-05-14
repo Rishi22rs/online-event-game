@@ -221,7 +221,7 @@ const QuestionSlider=({match})=>{
 			</div>
 			<h1 className="text">Audio {songIndex+1}/{listOfSongs.length}</h1>
 			<h3 className="text">Your Score: {score}</h3>
-			{displayTimer!==0||disableInput?<h1 className="text">{displayTimer}</h1>:<img src={songList[songIndex].imgURL} alt={songList[songIndex].songAns} height={100} width={100}/>}
+			{!disableInput?<h1 className="text">{displayTimer}</h1>:<img src={listOfSongs[songIndex].imgURL} alt={listOfSongs[songIndex].songAns} height={100} width={100}/>}
 			{showCorrect?<p style={{float:"left",margin:'10px',color:"white",marginTop:'4%'}}>{listOfSongs[songIndex].songAns}<span style={{color:"#949EC4"}}> it is</span></p>:<></>}
 			<p style={{float:"right",margin:'10px',color:"white",marginTop:'4%'}}>Characters {input.length}/{listOfSongs[songIndex].songAns.length}</p>
 			<input disabled={disableInput} className="inputi" style={{fontWeight:"bold"}} type='text' placeholder='your answer' onChange={e=>setInput(e.target.value)} value={input}/><br />
