@@ -31,7 +31,7 @@ const QuestionSlider=({match})=>{
 	var timerId
 	const songList=[{
 			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/20th%20century%20fox.mp4",
-			songAns:"20th century studio"
+			songAns:"20th century fox"
 		},
 		{
 			songURL:"https://appointmentt.000webhostapp.com/approved/cse1/got.mp4",
