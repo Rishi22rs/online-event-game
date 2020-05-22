@@ -177,7 +177,6 @@ const QuestionSlider=({match})=>{
 			setCorrect('Incorrect')
 		}
 		setShowCorrect(true)
-		localStorage.setItem('score',score)
 		if(songIndex===listOfSongs.length-1){
 			setScoreBtn(true)
 			setShowPrompt(false)
@@ -190,7 +189,7 @@ const QuestionSlider=({match})=>{
 	useEffect(()=>{
 		if(input==='')setDisableSubmit(true)
 		else setDisableSubmit(false)
-		window.addEventListener("beforeunload",onUnload)
+		//window.addEventListener("beforeunload",onUnload)
 		if(displayTimer==0){
 			setLast(false)
 			StopGame()
@@ -198,6 +197,7 @@ const QuestionSlider=({match})=>{
 				CheckCorrectAns()
 			if(songIndex==listOfSongs.length-1){
 				setShowPrompt(false)
+				setDisableSubmit(true)
 				setScoreBtn(true)
 			}
 		}
@@ -232,7 +232,7 @@ const QuestionSlider=({match})=>{
 			<></>}
 			<h2 className="text">{correct}</h2>
 			{scoreBtn?
-			<button className="btn" style={{fontSize:'20px',padding:'20px',marginLeft:'25%'}}><Link style={{textDecoration:'none',color:'white'}} to={`/ShowScore`}>Go to score page</Link></button>:
+			<button className="btn" style={{fontSize:'20px',padding:'20px',marginLeft:'25%'}}><Link style={{textDecoration:'none',color:'white'}} to={`/ShowScore/${score}`}>Go to score page</Link></button>:
 			<>
 			</>
 			}

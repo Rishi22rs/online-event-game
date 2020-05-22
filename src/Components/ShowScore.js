@@ -1,7 +1,7 @@
 import React,{useEffect} from 'react'
 import axios from 'axios'
 
-const ShowScore=()=>{
+const ShowScore=({match})=>{
 
 	// const UpdateScore=()=>{
     //     let formData=new FormData()
@@ -10,7 +10,6 @@ const ShowScore=()=>{
     //     axios.post('https://appointmentt.000webhostapp.com/online%20event/UpdateScore.php',formData)
 	// }
 	
-	const score=parseInt(localStorage.getItem('score'))+1
 
 	// useEffect(()=>{
 	// 	UpdateScore()
@@ -19,7 +18,7 @@ const ShowScore=()=>{
 		<>
 		<div>
 			<h1 className="text" style={{borderBottom:'2px solid white',paddingBottom:20}}>Final score</h1>
-			<h2 className="text" style={{color:'white'}}>{score}/10</h2>
+			<h2 className="text" style={{color:'white'}}>{match.params.score}/10</h2>
 			<p className="text" style={{fontSize:30}}>Well played</p>
 			<p className="text">Check out my game first indie game for android devices.</p>
 			<p className="text"><a style={{color:'white'}} href="https://play.google.com/store/apps/details?id=com.UnderratedGames.HowLong">Just click here</a></p>
